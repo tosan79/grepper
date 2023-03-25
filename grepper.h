@@ -1,3 +1,6 @@
+#ifndef GREPPER_INCLUDED
+#define GREPPER_INCLUDED 1
+
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -5,10 +8,7 @@
 #include <thread>
 #include <mutex>
 
-#include <vector>
-#include <functional>
-#include <queue>
-
 class Params;
-class ThreadPool;
 void grep(std::string s, std::string p);
+
+#endif

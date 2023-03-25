@@ -1,5 +1,5 @@
 CC = g++
-FLAGS = -std=c++17 -Wall -Wextra
+FLAGS = -std=c++17 -Wall -Wextra -pthread
 
 grepper: main.o threadpool.o
 	$(CC) main.cpp threadpool.cpp -o grepper $(FLAGS)
