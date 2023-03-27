@@ -12,7 +12,6 @@
 class ThreadPool {
     bool is_done;
     int num_of_threads;
-    std::string pattern;
     std::mutex mutex;
     std::condition_variable data_cond;
     std::queue<std::function<void()>> works;

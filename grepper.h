@@ -7,6 +7,8 @@
 #include <string>
 #include <thread>
 #include <mutex>
+#include <queue>
+#include <unistd.h>
 #include "threadpool.h"
 
 class Params {

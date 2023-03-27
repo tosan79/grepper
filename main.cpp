@@ -5,8 +5,9 @@ int main(int argc, char* argv[]) {
     Params ps;
     ps.parse(argc, argv);
     
-    ThreadPool tp(3);
+    ThreadPool tp(4);
+    usleep(10000);
     enqueue(".", ps.pattern, tp);
-
+    
     return 0;
 }

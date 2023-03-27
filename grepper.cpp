@@ -22,5 +22,5 @@ void grep(std::string path, std::string &pattern) {
 
 void enqueue(std::string dir, std::string &pattern, ThreadPool &tp) {
     for (auto x : std::filesystem::recursive_directory_iterator(dir))
-        tp.submit_work(std::bind(grep, x.path(), pattern)); // grep(x.path(), pattern);
+        tp.submit_work(std::bind(grep, x.path(), pattern));
 }
