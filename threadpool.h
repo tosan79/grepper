@@ -7,7 +7,22 @@
 #include <vector>
 #include <functional>
 #include <queue>
+#include <condition_variable>
 
-class ThreadPool;
+class ThreadPool {
+    bool is_done;
+    int num_of_threads;
+    std::string pattern;
+    std::mutex mutex;
+    std::condition_variable data_cond;
+    std::queue<std::function<void()>> works;
+    std::vector<std::thread> threads;
+    void worker();
+
+public:
+    ThreadPool(int n);
+    ~ThreadPool();
+    void submit_work(const std::function<void()> work);
+};
 
 #endif
