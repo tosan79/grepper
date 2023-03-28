@@ -80,6 +80,9 @@ public:
     }
 };
 
+// the code of ThreadPool class is also based on book mentioned above
+// but thoroughly examined, adjusted, compared with other sources & understood :)
+
 class ThreadPool {
     bool is_done;
     int num_of_threads;

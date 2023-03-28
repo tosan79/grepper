@@ -1,6 +1,7 @@
 #include "threadpool.h"
 #include "grepper.h"
 
+//ensures that thread pool is destructed correctly
 join_threads::~join_threads()
 {
     for(unsigned long i=0;i<threads.size();++i)
@@ -21,6 +22,7 @@ ThreadPool::ThreadPool(int n)
     }
 }
 
+//the function of the thread
 void ThreadPool::worker() {
     while (!is_done) {
         std::function<void()> work;
@@ -31,6 +33,7 @@ void ThreadPool::worker() {
     }
 }
 
+//sends one work to queue
 void ThreadPool::submit_work(const std::function<void()> work) {
     works.push(work);
 }

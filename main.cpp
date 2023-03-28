@@ -2,9 +2,13 @@
 #include "threadpool.h"
 
 int main(int argc, char* argv[]) {
+    
+    //parse program arguments:
     Params ps;
     ps.parse(argc, argv);
+    std::cout << ps.dir << " " << ps.log_file << " " << ps.result_file << " " << ps.num_of_threads << "\n";
     
+    //use threads pool:
     ThreadPool tp(ps.num_of_threads);
 
     //enqueue tasks:
