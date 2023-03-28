@@ -21,6 +21,5 @@ public:
 };
 
 void grep(std::string path, std::string &pattern);
-void enqueue(std::string dir, std::string &pattern, ThreadPool &tp);
 
 #endif

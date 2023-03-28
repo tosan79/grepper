@@ -7,7 +7,17 @@ void Params::parse(int argc, char* argv[]) {
     }
     else if (argc == 2) {
         this->pattern = argv[1];
+        this->dir = ".";
+        this->log_file = "grepper.log";
+        this->result_file = "grepper.txt";
+        this->num_of_threads = 4;
     }
+    else {
+        std::vector<std::string> arguments;
+        for (int i = 0; i < argc; i++)
+            arguments.push_back(argv[i]);
+    }
+
 }
 
 void grep(std::string path, std::string &pattern) {
@@ -18,9 +28,4 @@ void grep(std::string path, std::string &pattern) {
         if (line.find(pattern) != std::string::npos)
             std::cout << tid << ":" << path << ":" << line << "\n";
     }
-}
-
-void enqueue(std::string dir, std::string &pattern, ThreadPool &tp) {
-    for (auto x : std::filesystem::recursive_directory_iterator(dir))
-        tp.submit_work(std::bind(grep, x.path(), pattern));
 }
