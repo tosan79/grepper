@@ -22,7 +22,6 @@ ThreadPool::ThreadPool(int n)
     }
 }
 
-//the function of the thread
 void ThreadPool::worker() {
     while (!is_done) {
         std::function<void()> work;
@@ -33,11 +32,12 @@ void ThreadPool::worker() {
     }
 }
 
-//sends one work to queue
+//sends one work (one call of the grep(), for instance) to queue
 void ThreadPool::submit_work(const std::function<void()> work) {
     works.push(work);
 }
 
 ThreadPool::~ThreadPool() {
     is_done = true;
+    //auto stop = std::chrono::high_resolution_clock::now();
 }

@@ -20,6 +20,6 @@ public:
     void parse(int argc, char* argv[]);
 };
 
-void grep(std::string path, std::string &pattern);
+void grep(std::string path, std::string &pattern, std::ofstream &log, std::ofstream &res);
 
 #endif

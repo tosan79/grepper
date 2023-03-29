@@ -8,8 +8,10 @@
 #include <functional>
 #include <queue>
 #include <condition_variable>
+#include <chrono>
 
-// the code of join_threads & safethread_queue classes is based on Anthony Williams' book "C++ Concurrency in Action"
+//the code of join_threads & safethread_queue classes is based on
+//Anthony Williams' book "C++ Concurrency in Action"
 
 class join_threads
 {
@@ -80,8 +82,8 @@ public:
     }
 };
 
-// the code of ThreadPool class is also based on book mentioned above
-// but thoroughly examined, adjusted, compared with other sources & understood :)
+//the code of ThreadPool class is also based on book mentioned above
+//but thoroughly examined, adjusted, compared with other sources & understood :)
 
 class ThreadPool {
     bool is_done;
