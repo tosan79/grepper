@@ -11,11 +11,15 @@ join_threads::~join_threads()
     } 
 }
 
+extern std::unordered_map<std::thread::id, std::string> log_map;
+
 ThreadPool::ThreadPool(int n)
 : is_done(false), num_of_threads(n), joiner(threads) {
     try {
         for (int i = 0; i < num_of_threads; i++)
-            threads.push_back(std::thread(&ThreadPool::worker, this));    
+            threads.push_back(std::thread(&ThreadPool::worker, this));
+        for (auto &t : threads)
+            log_map[t.get_id()];
     } catch(...) {
         is_done = true;
         throw;
@@ -39,5 +43,4 @@ void ThreadPool::submit_work(const std::function<void()> work) {
 
 ThreadPool::~ThreadPool() {
     is_done = true;
-    //auto stop = std::chrono::high_resolution_clock::now();
 }

@@ -8,7 +8,8 @@
 #include <thread>
 #include <mutex>
 #include <queue>
-#include <unistd.h>
+#include <unordered_map>
+#include <algorithm>
 #include "threadpool.h"
 
 class Params {
@@ -20,6 +21,16 @@ public:
     void parse(int argc, char* argv[]);
 };
 
-void grep(std::string path, std::string &pattern, std::ofstream &log, std::ofstream &res);
+struct res {
+    std::vector<std::string> paths;
+    std::vector<int> line_nums;
+    std::vector<std::string> lines;
+    int counter = 0;
+};
+
+bool cmp_log(const std::pair<std::thread::id, unsigned long> &p1, const std::pair<std::thread::id, unsigned long> &p2);
+bool cmp_res(const std::pair<std::string, int> &p1, const std::pair<std::string, int> &p2);
+
+void grep(std::string path, std::string &pattern);
 
 #endif

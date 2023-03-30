@@ -34,10 +34,25 @@ void Params::parse(int argc, char* argv[]) {
 int files_with_pattern = 0;
 int num_of_patterns = 0;
 
+//(i assume these mutexes are necessary to protect read/write access to the counter values above)
 std::mutex fwp_mut;
 std::mutex nop_mut;
 
-void grep(std::string path, std::string &pattern, std::ofstream &log, std::ofstream &res) {
+//log interface
+std::unordered_map<std::thread::id, std::vector<std::string>> log_map; // k: thread_id -> v: file1, file2, ...
+
+bool cmp_log(const std::pair<std::thread::id, unsigned long> &p1, const std::pair<std::thread::id, unsigned long> &p2) {
+    return p1.second > p2.second;
+}
+
+//res interface
+std::unordered_map<std::string, struct res> res_map; // k: filename -> v: num of patterns
+
+bool cmp_res(const std::pair<std::string, int> &p1, const std::pair<std::string, int> &p2) {
+    return p1.second > p2.second;
+}
+
+void grep(std::string path, std::string &pattern) {
     std::ifstream ifs(path);
     std::string::size_type p = path.rfind("/");
     std::string filename = path.substr(p+1);
@@ -54,12 +69,16 @@ void grep(std::string path, std::string &pattern, std::ofstream &log, std::ofstr
             }
             if (!pat_found)
                 pat_found = true;
-            log << tid << ": " << filename << "\n";
-            res << path << ":" << line_num << ": " << line << "\n";
+            
+            res_map[filename].paths.push_back(path);
+            res_map[filename].line_nums.push_back(line_num);
+            res_map[filename].lines.push_back(line);
+            res_map[filename].counter++;
         }
     }
     if (pat_found) {
         std::scoped_lock<std::mutex> lock(fwp_mut);
         files_with_pattern++;
+        log_map[tid].push_back(filename);
     }
 }
